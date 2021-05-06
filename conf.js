@@ -1,4 +1,4 @@
 module.exports = {
-    numClients: 125,
+    numClients: 25,
     tradersFraction: 0.1
 }

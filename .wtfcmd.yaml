@@ -1,0 +1,67 @@
+- name: stat
+  desc: Start stats for an implementation of websocket
+  cwd: ./
+  args:
+    - name: project
+      desc: name of the project to test (sio, sio1.7, uws, ws)
+      required: true
+  cmd:
+    bash: >
+      tmux kill-session -t stats-sockets;
+      tmux new-session -s stats-sockets\; 
+      set-option mouse on \; 
+      bind-key -n 'C-k' kill-window \; 
+      send-keys 'wtf server-{{ .project }}' C-m \; 
+      split-window -v -p 50 \; send-keys 'wtf client-{{ .project }}' C-m \; 
+      split-window -h -p 75\; send-keys 'wtf client-{{ .project }}' C-m \;
+      split-window -h -p 66\; send-keys 'wtf client-{{ .project }}' C-m \; 
+      split-window -h \; send-keys 'wtf client-{{ .project }}' C-m \; 
+      select-pane -D
+
+- name: client-sio
+  desc: start the client for socket.io
+  cwd: ./Socket.IO
+  cmd: node client.js
+
+- name: client-sio1.7
+  desc: start the client for socket.io 1.7
+  cwd: ./Socket.IO.1.7
+  cmd: node client.js
+
+- name: client-uws
+  desc: start the client for uwebsockets
+  cwd: ./uWebSockets.js
+  cmd: node client.js
+
+- name: server-uws
+  desc: start the client for uwebsockets
+  cwd: ./uWebSockets.js
+  cmd: node server.js
+
+- name: server-sio
+  desc: start the client for socket.io
+  cwd: ./Socket.IO
+  cmd: node server.js
+
+- name: server-sio1.7
+  desc: start the client for socket.io 1.7
+  cwd: ./Socket.IO.1.7
+  cmd: node server.js
+
+- name: server-ws
+  desc: start the client for classic ws
+  cwd: ./websockets
+  cmd: node server.js
+
+- name: client-ws
+  desc: start the client for classic ws
+  cwd: ./websockets
+  cmd: node client.js
+
+- name: init
+  desc: install all needed package
+  cmd: |
+    (cd ./uWebSockets.js && npm i && cd ../)
+    (cd ./websockets && npm i && cd ../)
+    (cd ./Socket.IO && npm i && cd ../)
+    (cd ./Socket.IO.1.7 && npm i && cd ../)

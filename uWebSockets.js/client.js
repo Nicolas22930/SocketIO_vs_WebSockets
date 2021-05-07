@@ -10,7 +10,7 @@ const numClients = conf.numClients;
 const tradersFraction = conf.tradersFraction;
 
 /* 125 * 4 = 500, even though 4 instances cannot stress the server fully */
-console.log("RUN 4 INSTANCES OF THIS CLIENT");
+// console.log("RUN 4 INSTANCES OF THIS CLIENT");
 
 let shares = [
 	'NFLX',
